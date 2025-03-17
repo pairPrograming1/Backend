@@ -1,4 +1,4 @@
-const { getRolesController } = require('../Controllers/RolesController');
+const { getRolesController, changeRolesController } = require('../Controllers/RolesController');
 
 const getRolesHandler = async (req, res) =>{
     try {
@@ -9,6 +9,17 @@ const getRolesHandler = async (req, res) =>{
     }
 }
 
+const changeRoleHandler = async(req, res) => {
+    const { Id } = req.params;
+    const { roleId } = req.body
+    try {
+        await changeRolesController(Id, roleId);
+        return res.status(201).json("Cambio exitoso")
+    } catch (error) {
+        return res.status(400).json({message:error.message});
+    }
+}
 module.exports = {
-    getRolesHandler
+    getRolesHandler,
+    changeRoleHandler
 }
