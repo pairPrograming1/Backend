@@ -44,11 +44,11 @@ sequelize.models = Object.fromEntries(capsEntries);
 console.log(sequelize.models);
 
 // Destructuring de los modelos
-const { Users, Rol, User_Type, Invitados, Salones, Eventos, Metodo_de_pago, Punto_de_venta } = sequelize.models;
+const { Users, Rols, User_Type, Invitados, Salones, Eventos, Metodo_de_pago, Punto_de_venta } = sequelize.models;
 /* ------------------- Relaciones --------------------- */
 // Usuario / Roles
-Rol.hasMany(Users, { foreignKey: 'roleId' });
-Users.belongsTo(Rol, { foreignKey: 'roleId' });
+Rols.hasMany(Users, { foreignKey: 'roleId' });
+Users.belongsTo(Rols, { foreignKey: 'roleId' });
 // Usuario / Tipos
 User_Type.hasMany(Users, { foreignKey: 'utypeId' });
 Users.belongsTo(User_Type, { foreignKey: 'utypeId',  allowNull:false});
@@ -80,6 +80,7 @@ Eventos.hasMany(Invitados, { foreignKey: 'eventoId'});
 Invitados.belongsTo(Eventos, { foreignKey: 'eventoId'});
 
 // Transacciones y registro de las mismas
+
 
 
 module.exports = {

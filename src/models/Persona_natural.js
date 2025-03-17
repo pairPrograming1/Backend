@@ -14,13 +14,6 @@ module.exports = (sequelize) => {
             type: DataTypes.STRING,
             allowNull:false,
         },
-        dni:{
-            type: DataTypes.STRING,
-            allowNull:false,
-            validate: {
-                is: /^\d{7,8}$/ // Asegura que el DNI tenga entre 7 y 8 dígitos numéricos
-            }
-        }
 
     }, { timestamps: true });
 }
