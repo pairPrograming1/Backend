@@ -1,6 +1,5 @@
 const { DataTypes, UUIDV4 } = require('sequelize');
 const bcrypt = require('bcrypt'); // Para hashear contraseñas
-
 module.exports = (sequelize) => {
   sequelize.define('Users', {
     id: {
@@ -11,36 +10,48 @@ module.exports = (sequelize) => {
     },
     auth0Id: {
       type: DataTypes.STRING,
-      allowNull: true, // Puede ser null si el usuario se registra directamente en tu sistema
+      allowNull: true,
       unique: true,
     },
     dni: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          msg: 'DNI no puede estar vacío',
+          args: [this.auth0Id === null] 
+        }
       }
     },
     nombre: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true, 
       validate: {
-        notEmpty: true
+        notEmpty: {
+          msg: 'Nombre no puede estar vacío',
+          args: [this.auth0Id === null]
+        }
       }
     },
     apellido: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true, 
       validate: {
-        notEmpty: true
+        notEmpty: {
+          msg: 'Apellido no puede estar vacío',
+          args: [this.auth0Id === null]
+        }
       }
     },
     direccion: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true, 
       validate: {
-        notEmpty: true
+        notEmpty: {
+          msg: 'Dirección no puede estar vacía',
+          args: [this.auth0Id === null]
+        }
       }
     },
     email: {
@@ -53,22 +64,28 @@ module.exports = (sequelize) => {
     },
     whatsapp: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true, 
       validate: {
-        notEmpty: true
+        notEmpty: {
+          msg: 'Whatsapp no puede estar vacío',
+          args: [this.auth0Id === null]
+        }
       }
     },
     usuario: {
       type: DataTypes.STRING,
-      allowNull: false,
+      allowNull: true,
       unique: true,
       validate: {
-        notEmpty: true
+        notEmpty: {
+          msg: 'Usuario no puede estar vacío',
+          args: [this.auth0Id === null]
+        }
       }
     },
     password: {
       type: DataTypes.STRING,
-      allowNull: true, // Puede ser null si usa Auth0
+      allowNull: true, 
       validate: {
         notNullIfNoAuth0(value) {
           if (!this.auth0Id && !value) {
