@@ -37,31 +37,24 @@ const createUsserHandler = async (req, res) => {
 }
 
 const obtenerUserHandler = async (req, res) => {
-    const Id = req.body;
+    const { id } = req.params;
     try {
-        if(!Id){
+        if(!id){
             return res.status(400).json({
                 error: "Solicitud incorrecta",
                 message: "El Identificador no puede estar vacio.",
             });
         }
-        const user = await obtenerUserController(Id);
-        return res.status(201).json(user.email);
+        const user = await obtenerUserController(id);
+        return res.status(201).json(user);
     } catch (error) {
         return res.status(400).json({message: error.message});
     }
 }
 const obtenerUserGridHandler = async (req, res) => {
-    const Id = req.body;
     try {
-        if(!Id){
-            return res.status(400).json({
-                error: "Solicitud incorrecta",
-                message: "El Identificador no puede estar vacio.",
-            });
-        }
-        const user = await obtenerUserGridController(Id);
-        return res.status(201).json(user);
+        const users = await obtenerUserGridController();
+        return res.status(201).json(users);
     } catch (error) {
         return res.status(400).json({message: error.message});
     }

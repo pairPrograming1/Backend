@@ -5,4 +5,7 @@ const { createUsserHandler, obtenerUserHandler,
 
 const routeUsers = Router();
 routeUsers.post('/register', createUsserHandler);
+routeUsers.get('/perfil/:id', obtenerUserHandler);
+routeUsers.get('/grid', obtenerUserGridHandler);
+routeUsers.put('/register', updateUserHandler);
 module.exports = routeUsers;

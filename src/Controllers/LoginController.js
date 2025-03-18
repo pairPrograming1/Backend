@@ -13,7 +13,7 @@ const login = async (usuario, password) => {
         model: Rols,
         attributes: ["rol"],
       },
-      attributes: { // Especificamos los atributos a incluir, incluyendo 'password'
+      attributes: { 
         include: ['password']
       },
       raw: true,
@@ -33,7 +33,6 @@ const login = async (usuario, password) => {
     const token = jwt.sign({ userId: user.id, role: roleName }, JWTKEY, {
       expiresIn: "1h",
     });
-
     return { token };
   } catch (error) {
     throw new Error(`Error al iniciar sesión: ${error.message}`);

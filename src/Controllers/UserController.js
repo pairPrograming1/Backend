@@ -1,4 +1,4 @@
-const { Users, Rols } = require("../DbIndex");
+const { Users, Rols, User_Type } = require("../DbIndex");
 
 const createUserController = async (data) => {
   try {
@@ -17,14 +17,15 @@ const createUserController = async (data) => {
   }
 };
 //datos como el perfil principal del usuario
-const obtenerUserController = async(Id) => {
+const obtenerUserController = async (id) => {
   try {
-    const user = await Users.findByPk(Id, {
+    const user = await Users.findByPk(id, {
       attributes: ['dni', 'nombre', 'apellido', 'email', 'direccion', 'whatsapp', 'usuario'],
       include:{
         model: User_Type,
-        attributes: ['usertyype']
-      }
+        attributes: ['usertype']
+      },
+      raw: true,
     });
     
     if (!user) {
@@ -37,16 +38,15 @@ const obtenerUserController = async(Id) => {
   }
 };
 //obtener datos para grid
-const obtenerUserGridController = async (id) => {
+const obtenerUserGridController = async () => {
   try {
-    const grid =  await Users.findByPk(id, {
+    const grid =  await Users.findAll({
       attributes:['usuario', 'nombre', 'apellido', 'email'],
       include:{
-        model: "Rols",
-        attributes:['rol']
+        model: Rols,
+        attributes:['rol'],
       },
-      raw: true, 
-      nest: true
+      raw: true
     })
     return grid;
   } catch (error) {
