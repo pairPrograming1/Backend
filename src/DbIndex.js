@@ -54,7 +54,8 @@ User_Type.hasMany(Users, { foreignKey: 'utypeId' });
 Users.belongsTo(User_Type, { foreignKey: 'utypeId',  allowNull:false});
 
 // Salones / Users
-Salones.belongsTo(Users, { foreignKey: 'userId'});
+Salones.belongsToMany(Users, {  through: 'UsersSalones', foreignKey: 'salonId' });
+Users.belongsToMany(Salones, { through: 'UsersSalones', foreignKey: 'userId' });
 
 // Usuario / Punto de venta:
 Users.belongsToMany(Punto_de_venta, { through: 'UserPuntoVenta', foreignKey: 'userId' });

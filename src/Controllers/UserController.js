@@ -9,9 +9,9 @@ const createUserController = async (data) => {
       defaults: data,
     });
     if (!created) {
-      throw new Error("EL usuario ya existe");
+      return { success: false, message: 'El salón ya existe' };
     }
-    return existingUser;
+    return { success: true, message: 'Salón creado exitosamente' };
   } catch (error) {
     throw new Error(`${error.message}`);
   }
