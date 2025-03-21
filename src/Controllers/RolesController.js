@@ -1,6 +1,6 @@
 const { Rols, Users } = require('../DbIndex')
 
-const getRolesController = async(Id) => {
+const getRolesController = async () => {
     try {
         const result = await Rols.findAll();
         return result
