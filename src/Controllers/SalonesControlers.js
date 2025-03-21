@@ -13,9 +13,20 @@ const getGridSalonesController = async () => {
 
 const getSalonController = async (id, data) => {
     try {
-        const result = await Salones.findByPk(id);
+        const result = await Salones.findByPk(id, 
+            {
+                attributes: ['salon', "capacidad", 'cuit', 'email', 'nombre', 'whatsapp', 'Mercadopago', 'estatus'],
+                include: [
+                    {
+                        model: Users,
+                        through: { attributes: [] },
+                        attributes: ['usuario']
+                    }
+                ] 
+            }
+         );
         if (!result) {
-            throw new Error("Salón no encontrado");
+            throw new Error('Salon no encontrado');
         }
         return { success: true, data: result };
     } catch (error) {
@@ -30,7 +41,7 @@ const postSalonController = async (data) => {
             defaults: data,
         })
         if(!created) {
-            return { success: false, message: 'El salón ya existe' };
+            throw new Error('El salón ya existe');
         }
         return { success: true, message: 'Salón creado exitosamente' };
     } catch (error) {
@@ -44,13 +55,13 @@ const postUserSalonController = async (userId, salonId) => {
         const salon = await Salones.findByPk(salonId);
         const rol = await Rols.findByPk(user.roleId);
         if (!user || !salon) {
-            return { success: false, message: 'Usuario o salón no encontrado' };
+            throw new Error(`Usuario o salón no encontrado}`);
         }
         if(rol.rol === 'Vendedor'){
             await salon.addUser(user);
             return { success: true, message: 'Usuario agregado exitosamente al salón' };
         }else{
-            return { success: false, message: 'Solo puedes agregar usuarios con el rol de Vendedor' };
+            throw new Error(`Solo puedes agregar usuarios con el rol de Vendedor`);
         }
     } catch (error) {
         throw new Error(`Error al agregar el usuario al salón: ${error.message}`);

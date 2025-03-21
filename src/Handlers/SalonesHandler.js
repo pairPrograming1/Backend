@@ -34,8 +34,8 @@ const postSalonHandler = async(req, res) => {
 const postUserSalonHandler = async (req, res) => {
     const {userId, salonId} = req.body;
     try {
-        await postUserSalonController(userId, salonId);
-        return res.status(201).json('usuario agregado');
+        const result = await postUserSalonController(userId, salonId);
+        return res.status(201).json(result);
     } catch (error) {
         return res.status(400).json({message: error.message});
     }
