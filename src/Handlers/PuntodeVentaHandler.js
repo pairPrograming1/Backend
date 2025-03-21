@@ -1,5 +1,5 @@
 const { createPuntoDeVentaController, putPuntoDeVentaController,
-    getPuntoDeVentaByIdController
+    getPuntoDeVentaByIdController, addUserToPuntoDeVenta
  } = require('../Controllers/PuntodeVentaController');
 
 
@@ -48,9 +48,18 @@ const getPuntoDeVentaByIdHandler = async (req, res) => {
     }
 };
 
-
+const addVendedorPuntoHandler = async (req, res) => {
+    const { userId, puntoId } = req.body;
+    try {
+        const result = await addUserToPuntoDeVenta(userId, puntoId);
+        return res.status(201).json(result);
+    } catch (error) {
+        return res.status(500).json({ success: false, message: `Error interno del servidor: ${error.message}` });
+    }
+}
 module.exports = {
     createPuntoDeVentaHandler,
     putPuntoDeVentaHandler,
-    getPuntoDeVentaByIdHandler
+    getPuntoDeVentaByIdHandler,
+    addVendedorPuntoHandler
 }

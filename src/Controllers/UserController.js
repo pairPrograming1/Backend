@@ -9,7 +9,7 @@ const createUserController = async (data) => {
       defaults: data,
     });
     if (!created) {
-      return { success: false, message: 'El usuario ya existe' };
+      throw new Error(`El usuario ya existe`);
     }
     return { success: true, message: 'Usuario creado exitosamente' };
   } catch (error) {
@@ -59,7 +59,7 @@ const updateUserController = async (id, data) => {
     const [updatedRows] = await Users.update(data, { where: id });
 
     if (updatedRows === 0) {
-      return { success: false, message: "No se encontró el usuario o no hubo cambios" };
+      throw new Error(`No se encontró el usuario o no hubo cambios`);
     }
     return { success: true, message: "Información actualizada correctamente" };
   } catch (error) {
