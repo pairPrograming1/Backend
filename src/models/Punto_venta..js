@@ -7,6 +7,10 @@ module.exports = (sequelize) => {
             primaryKey: true,
             defaultValue: UUIDV4
         },
+        razon:{
+            type:DataTypes.STRING,
+            allowNull:false
+        },
         nombre:{
             type: DataTypes.STRING,
             allowNull:false
@@ -27,6 +31,10 @@ module.exports = (sequelize) => {
                 is: /^\d{2}-\d{8}-\d{1}$/  // Valida formato CUIT argentino
             }
         },
+        email: {
+            type: DataTypes.STRING,
+            allowNull: false,
+          },
         es_online:{
             type: DataTypes.BOOLEAN,
             allowNull:false,

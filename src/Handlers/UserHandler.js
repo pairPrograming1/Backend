@@ -62,7 +62,8 @@ const obtenerUserGridHandler = async (req, res) => {
 
 const updateUserHandler = async (req, res) =>{
     const id = req.params
-    const {data} =req.body
+    const { nombre, apellido, direccion, email, whatsapp } = req.body;
+    const data = { nombre, apellido, direccion, email, whatsapp };
     try {
         await updateUserController(id, data);
         return res.status(201).json("Modificacion Exitosa");

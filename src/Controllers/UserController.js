@@ -9,9 +9,9 @@ const createUserController = async (data) => {
       defaults: data,
     });
     if (!created) {
-      return { success: false, message: 'El salón ya existe' };
+      return { success: false, message: 'El usuario ya existe' };
     }
-    return { success: true, message: 'Salón creado exitosamente' };
+    return { success: true, message: 'Usuario creado exitosamente' };
   } catch (error) {
     throw new Error(`${error.message}`);
   }
@@ -54,14 +54,14 @@ const obtenerUserGridController = async () => {
   }
 }
 
-const updateUserController = async (data) => {
-  const {nombre, apellido, direccion, email, whatsapp, id} = data;
+const updateUserController = async (id, data) => {
   try {
-    await Users.update(
-      { nombre, apellido, direccion, email, whatsapp },
-      { where: { id } }
-    );
-    return "informacion actualizada correctamente"; // Otra indicación de que la actualización fue exitosa
+    const [updatedRows] = await Users.update(data, { where: id });
+
+    if (updatedRows === 0) {
+      return { success: false, message: "No se encontró el usuario o no hubo cambios" };
+    }
+    return { success: true, message: "Información actualizada correctamente" };
   } catch (error) {
     throw new Error(`Error al actualizar la información del usuario, ${error.message}`);
   }
