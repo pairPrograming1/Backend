@@ -8,6 +8,12 @@ const { LINKDB } = process.env;
 const sequelize = new Sequelize(LINKDB, {
   logging: false,
   native: false,
+  dialectOptions: {
+    ssl: {
+      require: true,
+      rejectUnauthorized: false, // You can set this to true if you're using a trusted certificate
+    },
+  },
 });
 
 const modelDefiners = [];
